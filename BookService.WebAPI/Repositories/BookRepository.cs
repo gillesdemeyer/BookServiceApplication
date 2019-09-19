@@ -50,7 +50,8 @@ namespace BookService.WebAPI.Repositories
                     AuthorId = b.Author.Id,
                     AuthorName = $"{b.Author.FirstName} {b.Author.LastName}",
                     PublisherId = b.Publisher.Id,
-                    PublisherName = b.Publisher.Name
+                    PublisherName = b.Publisher.Name,
+                    FileName = b.FileName
                 }).FirstOrDefault();
         }
 
