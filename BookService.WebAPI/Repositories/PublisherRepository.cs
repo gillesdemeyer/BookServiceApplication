@@ -1,4 +1,5 @@
 ﻿using BookService.WebAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,31 @@ namespace BookService.WebAPI.Repositories
         public Publisher GetById(int id)
         {
             return db.Publishers.FirstOrDefault(p => p.Id == id);
+        }
+
+        public async Task<Publisher> Update(Publisher publisher)
+        {
+            try
+            {
+                db.Entry(publisher).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+            } catch (DbUpdateConcurrencyException)
+            {
+                if (!PublisherExists(publisher.Id))
+                {
+                    return null;
+                } else
+                {
+                    throw;
+                }
+            }
+
+            return publisher;
+        }
+
+        private bool PublisherExists(int id)
+        {
+            return db.Publishers.Any(e => e.Id == id);
         }
     }
 }

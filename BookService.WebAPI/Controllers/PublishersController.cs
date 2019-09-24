@@ -1,5 +1,7 @@
-﻿using BookService.WebAPI.Repositories;
+﻿using BookService.WebAPI.Models;
+using BookService.WebAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BookService.WebAPI.Controllers
 {
@@ -28,5 +30,20 @@ namespace BookService.WebAPI.Controllers
         {
             return Ok(repository.GetById(id));
         }
+
+        // PUT: api/Publishers/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutPublisher([FromRoute] int id, 
+            [FromBody] Publisher publisher)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (id != publisher.Id) return BadRequest();
+
+            Publisher p = await repository.Update(publisher);
+
+            if (p == null) return NotFound();
+            return Ok(p);
+        }
+
     }
 }
