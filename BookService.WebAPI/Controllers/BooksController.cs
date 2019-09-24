@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BookService.WebAPI.Repositories;
@@ -40,6 +41,22 @@ namespace BookService.WebAPI.Controllers
         public IActionResult GetBook(int id)
         {
             return Ok(repository.GetById(id));
+        }
+
+        [HttpGet]
+        [Route("ImageByName/{filename}")]
+        public IActionResult ImageByFileName(string filename)
+        {
+            var image = Path.Combine(Directory.GetCurrentDirectory(),
+                             "wwwroot", "images", filename);
+            return PhysicalFile(image, "image/jpeg");
+        }
+
+        [HttpGet]
+        [Route("ImageById/{bookId}")]
+        public IActionResult ImageById(int bookId)
+        {
+            return ImageByFileName(repository.GetById(bookId).FileName);
         }
     }
 }
