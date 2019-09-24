@@ -48,6 +48,14 @@ namespace BookService.WebAPI.Repositories
             return publisher;
         }
 
+
+        public async Task<Publisher> Add(Publisher publisher)
+        {
+            db.Publishers.Add(publisher);
+            await db.SaveChangesAsync();
+            return publisher;
+        }
+
         private bool PublisherExists(int id)
         {
             return db.Publishers.Any(e => e.Id == id);

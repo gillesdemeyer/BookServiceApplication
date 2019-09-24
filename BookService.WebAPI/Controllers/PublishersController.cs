@@ -45,5 +45,14 @@ namespace BookService.WebAPI.Controllers
             return Ok(p);
         }
 
+        // POST api/Publishers
+        [HttpPost]
+        public async Task<IActionResult> PostPublisher([FromBody] Publisher publisher)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            await repository.Add(publisher);
+            return CreatedAtAction("GetPublisher", new { id = publisher.Id }, publisher);
+        }
+
     }
 }
