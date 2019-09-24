@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BookService.WebAPI.Models
 {
-    public class Book
+    public class Book: EntityBase
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public string ISBN { get; set; }
         [Display(Name="#")]
