@@ -54,5 +54,15 @@ namespace BookService.WebAPI.Controllers
             return CreatedAtAction("GetPublisher", new { id = publisher.Id }, publisher);
         }
 
+        // DELETE: api/Publishers/3
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePublisher([FromRoute] int id)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var publisher = await repository.Delete(id);
+            if (publisher == null) return NotFound();
+            return Ok(publisher);
+        }
+
     }
 }

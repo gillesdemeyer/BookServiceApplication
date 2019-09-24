@@ -56,6 +56,15 @@ namespace BookService.WebAPI.Repositories
             return publisher;
         }
 
+        public async Task<Publisher> Delete(int id)
+        {
+            var publisher = await db.Publishers.FindAsync(id);
+            if (publisher == null) return null;
+            db.Publishers.Remove(publisher);
+            await db.SaveChangesAsync();
+            return publisher;
+        }
+
         private bool PublisherExists(int id)
         {
             return db.Publishers.Any(e => e.Id == id);
