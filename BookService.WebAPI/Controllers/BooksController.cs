@@ -22,41 +22,41 @@ namespace BookService.WebAPI.Controllers
 
         // GET: api/Books
         [HttpGet]
-        public IActionResult GetBooks()
+        public async Task<IActionResult> GetBooks()
         {
-            return Ok(repository.List());
+            return Ok(await repository.ListAll());
         }
 
         // GET: api/Books/Basic
         [HttpGet]
         [Route("Basic")]
-        public IActionResult GetBooksBasic()
+        public async Task<IActionResult> GetBooksBasic()
         {
-            return Ok(repository.ListBasic());
+            return Ok(await repository.ListBasic());
         }
 
         // GET: api/Books/1
         [HttpGet]
         [Route("{id}")]
-        public IActionResult GetBook(int id)
+        public async Task<IActionResult> GetBook(int id)
         {
-            return Ok(repository.GetById(id));
+            return Ok(await repository.GetById(id));
         }
 
         [HttpGet]
         [Route("ImageByName/{filename}")]
-        public IActionResult ImageByFileName(string filename)
+        public  IActionResult ImageByFileName(string filename)
         {
             var image = Path.Combine(Directory.GetCurrentDirectory(),
                              "wwwroot", "images", filename);
-            return PhysicalFile(image, "image/jpeg");
+            return  PhysicalFile(image, "image/jpeg");
         }
 
         [HttpGet]
         [Route("ImageById/{bookId}")]
-        public IActionResult ImageById(int bookId)
+        public async Task<IActionResult> ImageById(int bookId)
         {
-            return ImageByFileName(repository.GetById(bookId).FileName);
+            return ImageByFileName((await repository.GetDetailById(bookId)).FileName);
         }
     }
 }
