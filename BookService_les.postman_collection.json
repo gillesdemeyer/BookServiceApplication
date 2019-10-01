@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "01600e61-f5da-489b-a704-3b31e0e3393d",
+		"name": "BookService_les",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "BookService les",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44338/api/Books/Basic",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"api",
+						"Books",
+						"Basic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BookService Publisher Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":1,\n\t\"name\":\"IT-publishers UPDATE\",\n\t\"country\": \"Sweden\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44338/api/Publishers/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"api",
+						"Publishers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BookService Publisher Insert",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":0,\n\t\"name\":\"Howest\",\n\t\"country\": \"Belgium\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44338/api/Publishers",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"api",
+						"Publishers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BookService Book Insert",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":0,\n\t\"title\":\"HowestBook\",\n\t\"isbn\": \"123456789\",\n\t\"numberofpages\":100, \n\t\"authorid\":1,\n\t\"publisherid\":1,\n\t\"filename\":\"book1.jpg\",\n\t\"price\":25,\n\t\"year\":2000\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44338/api/Books",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"api",
+						"Books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BookService Publisher Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44338/api/Publishers/4",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"api",
+						"Publishers",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BookService Book Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44338/api/Books/8",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"api",
+						"Books",
+						"8"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
