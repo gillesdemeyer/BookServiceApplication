@@ -1,4 +1,5 @@
-﻿using BookService.WebAPI.Repositories;
+﻿using BookService.WebAPI.Models;
+using BookService.WebAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -6,21 +7,13 @@ namespace BookService.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorsController : ControllerBase
+    public class AuthorsController : ControllerCrudBase<Author, AuthorRepository>
     {
-        AuthorRepository repository;
 
-        public AuthorsController(AuthorRepository authorRepository)
+        public AuthorsController(AuthorRepository authorRepository): base(authorRepository)
         {
-            repository = authorRepository;
         }
 
-        // GET: api/Authors
-        [HttpGet]
-        public async Task<IActionResult> GetAuthors()
-        {
-            return Ok(await repository.ListAll());
-        }
 
         // GET: api/Authors/Basic
         [HttpGet]
@@ -28,13 +21,6 @@ namespace BookService.WebAPI.Controllers
         public async Task<IActionResult> GetAuthorBasic()
         {
             return Ok(await repository.ListBasic());
-        }
-
-        // GET: api/Authors/2
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAuthor(int id)
-        {
-            return Ok(await repository.GetById(id));
         }
     }
 }
