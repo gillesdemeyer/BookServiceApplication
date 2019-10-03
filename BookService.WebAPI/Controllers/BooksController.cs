@@ -49,5 +49,25 @@ namespace BookService.WebAPI.Controllers
         {
             return ImageByFileName((await repository.GetDetailById(bookId)).FileName);
         }
+
+        // api/books/image
+        [HttpPost]
+        [Route("Image")]
+        public async Task<IActionResult> Image(IFormFile formFile)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                             "wwwroot", "images", formFile.FileName);
+
+            if (formFile.Length > 0)
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await formFile.CopyToAsync(stream);
+                }
+            }
+
+            return Ok(new { count = 1, formFile.Length});
+
+        }
     }
 }
