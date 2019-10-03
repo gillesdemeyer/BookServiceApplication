@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace BookService.WebAPI.Models
 {
@@ -7,6 +8,7 @@ namespace BookService.WebAPI.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        [JsonIgnore]
         public ICollection<Rating> Ratings { get; set; }
     }
 }
