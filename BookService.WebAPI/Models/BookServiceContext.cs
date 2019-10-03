@@ -204,6 +204,8 @@ namespace BookService.WebAPI.Models
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Reader> Readers { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
     }
 
 
