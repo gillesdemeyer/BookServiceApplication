@@ -19,7 +19,7 @@ namespace BookService.WebAPI.Models
         public string FileName { get; set; }
 
         public decimal Price { get; set; }
-        public string Year { get; set; }
+        public int Year { get; set; }
 
         public ICollection<Rating> Ratings { get; set; }
     }
