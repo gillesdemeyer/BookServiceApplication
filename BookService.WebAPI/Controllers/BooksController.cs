@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BookService.Lib.Models;
 using BookService.WebAPI.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,37 +12,41 @@ namespace BookService.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BooksController : ControllerBase
+    public class BooksController : ControllerCrudBase<Book, BookRepository>
     {
-
-        BookRepository repository;
-        public BooksController(BookRepository bookRepository)
+        public BooksController(BookRepository bookRepository): base(bookRepository)
         {
-            repository = bookRepository;
         }
 
         // GET: api/Books
         [HttpGet]
-        public async Task<IActionResult> GetBooks()
+        public override async Task<IActionResult> Get()
         {
-            return Ok(await repository.ListAll());
+            return Ok(await repository.GetAllInclusive());
+        }
+
+        [HttpGet]
+        [Route("Statistics")]
+        public async Task<IActionResult> GetStatistics()
+        {
+            return Ok(await repository.ListBookStatistics());
+        }
+
+        [HttpGet]
+        [Route("Detail/{id}")]
+        public async Task<IActionResult> GetBookDetail(int id)
+        {
+            return Ok(await repository.GetDetailById(id));
         }
 
         // GET: api/Books/Basic
         [HttpGet]
         [Route("Basic")]
-        public async Task<IActionResult> GetBooksBasic()
+        public async Task<IActionResult> GetBookBasic()
         {
             return Ok(await repository.ListBasic());
         }
 
-        // GET: api/Books/1
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> GetBook(int id)
-        {
-            return Ok(await repository.GetById(id));
-        }
 
         [HttpGet]
         [Route("ImageByName/{filename}")]
@@ -57,6 +62,26 @@ namespace BookService.WebAPI.Controllers
         public async Task<IActionResult> ImageById(int bookId)
         {
             return ImageByFileName((await repository.GetDetailById(bookId)).FileName);
+        }
+
+        // api/books/image
+        [HttpPost]
+        [Route("Image")]
+        public async Task<IActionResult> Image(IFormFile formFile)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                             "wwwroot", "images", formFile.FileName);
+
+            if (formFile.Length > 0)
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await formFile.CopyToAsync(stream);
+                }
+            }
+
+            return Ok(new { count = 1, formFile.Length});
+
         }
     }
 }

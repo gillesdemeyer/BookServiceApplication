@@ -1,4 +1,4 @@
-﻿using BookService.WebAPI.Models;
+﻿using BookService.Lib.Models;
 using BookService.WebAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -48,7 +48,7 @@ namespace BookService.WebAPI.Controllers
 
         // POST api/T
         [HttpPost]
-        public async Task<IActionResult> PostPublisher([FromBody] T entity)
+        public async Task<IActionResult> Post([FromBody] T entity)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             await repository.Add(entity);
@@ -57,7 +57,7 @@ namespace BookService.WebAPI.Controllers
 
         // DELETE: api/T/3
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePublisher([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted  = await repository.Delete(id);

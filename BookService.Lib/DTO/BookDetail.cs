@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BookService.WebAPI.DTO
+namespace BookService.Lib.DTO
 {
     public class BookDetail
     {
@@ -16,6 +16,6 @@ namespace BookService.WebAPI.DTO
         public string FileName { get; set; }
 
         public decimal Price { get; set; }
-        public string Year { get; set; }
+        public int Year { get; set; }
     }
 }
