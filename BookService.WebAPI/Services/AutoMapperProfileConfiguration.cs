@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BookService.WebAPI.Services
 {
+
     public class AutoMapperProfileConfiguration: Profile
     {
         public AutoMapperProfileConfiguration():this("MyProfile")
@@ -24,6 +25,14 @@ namespace BookService.WebAPI.Services
                     opts => opts.MapFrom(
                         src => $"{src.Author.LastName} {src.Author.FirstName}"))
                 .ReverseMap();
+            CreateMap<Book, BookStatistic>()
+                .ForMember(
+                    dest => dest.ScoreAverage,
+                    opts => opts.MapFrom(src => src.Ratings.Average(r => r.Score))
+                    )
+                .ReverseMap();
         }
+
+
     }
 }

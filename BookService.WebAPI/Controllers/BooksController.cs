@@ -26,6 +26,13 @@ namespace BookService.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("Statistics")]
+        public async Task<IActionResult> GetStatistics()
+        {
+            return Ok(await repository.ListBookStatistics());
+        }
+
+        [HttpGet]
         [Route("Detail/{id}")]
         public async Task<IActionResult> GetBookDetail(int id)
         {

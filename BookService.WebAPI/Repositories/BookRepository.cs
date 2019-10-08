@@ -31,6 +31,14 @@ namespace BookService.WebAPI.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<BookStatistic>> ListBookStatistics()
+        {
+            return await db.Books
+                .Where(b => b.Ratings.Count > 0)
+                .ProjectTo<BookStatistic>(mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
         public async Task<BookDetail> GetDetailById(int id)
         {
             return mapper.Map<BookDetail>( await db.Books
