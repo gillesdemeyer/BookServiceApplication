@@ -16,34 +16,19 @@ namespace BookService.MVC.Controllers
         public IActionResult Index()
         {
             string bookUri = $"{baseuri}/basic";
-            return View(GetApiResult<List<BookBasic>>(bookUri));
+            return View(GetApiResult<List<BookBasic>>(bookUri)); 
         }
 
-        public IActionResult Detail(int id)
-        {
-            string geekJokesUri = "https://geek-jokes.sameerkumar.website/api";
-            string ipsumUri = "https://baconipsum.com/api/?type=meat-and-filler&paras=2&format=text";
-            string bookUri = $"{baseuri}/detail/{id}";
-            return View(new BookDetailExtraViewModel
-            {
-                BookDetail = GetApiResult<BookDetail>(bookUri),
-                //TODO: fix exception on going back to list and executing this method again
-                //AuthorJoke = //GetApiResult<string>(geekJokesUri),
-                //BookSummary = new HttpClient().GetStringAsync(ipsumUri).Result //pure string response, no json 
-            }) ; 
-        }
-
-        public static T GetApiResult<T>(string uri)
+        public static async Task<T> GetApiResult<T>(string uri)
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                Task<String> response = httpClient.GetStringAsync(uri);
-                return Task.Factory.StartNew
+                string response = await httpClient.GetStringAsync(uri);
+                return await Task.Factory.StartNew
                             (
                                 () => JsonConvert
-                                      .DeserializeObject<T>(response.Result)
-                            )
-                            .Result;
+                                      .DeserializeObject<T>(response)
+                            );
             }
         }
     }
