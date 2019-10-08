@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookService.WebAPI.Models;
 using BookService.WebAPI.Repositories;
+using BookService.WebAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,7 +38,13 @@ namespace BookService.WebAPI
             services.AddScoped<ReaderRepository>();
             services.AddScoped<RatingRepository>();
 
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+           {
+               cfg.AddProfile(new AutoMapperProfileConfiguration());
+           });
 
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
 
         }
 
