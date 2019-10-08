@@ -17,7 +17,13 @@ namespace BookService.WebAPI.Services
 
         public AutoMapperProfileConfiguration(string profileName) : base(profileName)
         {
-            CreateMap<BookBasic, Book>();
+            CreateMap<BookBasic, Book>().ReverseMap();
+            CreateMap<Book, BookDetail>()
+                .ForMember(
+                    dest => dest.AuthorName,
+                    opts => opts.MapFrom(
+                        src => $"{src.Author.LastName} {src.Author.FirstName}"))
+                .ReverseMap();
         }
     }
 }

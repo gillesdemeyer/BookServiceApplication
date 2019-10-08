@@ -25,6 +25,13 @@ namespace BookService.WebAPI.Controllers
             return Ok(await repository.GetAllInclusive());
         }
 
+        [HttpGet]
+        [Route("Detail/{id}")]
+        public async Task<IActionResult> GetBookDetail(int id)
+        {
+            return Ok(await repository.GetDetailById(id));
+        }
+
         // GET: api/Books/Basic
         [HttpGet]
         [Route("Basic")]
