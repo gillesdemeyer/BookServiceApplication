@@ -1,4 +1,5 @@
-﻿using BookService.WebAPI.DTO;
+﻿using BookService.Lib.DTO;
+using BookService.Lib.Models;
 using BookService.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

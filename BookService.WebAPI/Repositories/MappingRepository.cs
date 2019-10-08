@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookService.Lib.Models;
 using BookService.WebAPI.Models;
 
 namespace BookService.WebAPI.Repositories

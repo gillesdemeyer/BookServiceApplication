@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using BookService.WebAPI.DTO;
-using BookService.WebAPI.Models;
-using System;
-using System.Collections.Generic;
+using BookService.Lib.DTO;
+using BookService.Lib.Models;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookService.WebAPI.Services
 {

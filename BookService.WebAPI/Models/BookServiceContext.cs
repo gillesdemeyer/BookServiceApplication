@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookService.Lib.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace BookService.WebAPI.Models

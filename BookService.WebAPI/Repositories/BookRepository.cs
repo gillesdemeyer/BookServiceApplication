@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using BookService.WebAPI.DTO;
+using BookService.Lib.DTO;
+using BookService.Lib.Models;
 using BookService.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
