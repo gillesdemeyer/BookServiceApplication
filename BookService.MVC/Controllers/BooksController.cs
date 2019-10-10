@@ -13,10 +13,10 @@ namespace BookService.MVC.Controllers
     public class BooksController : Controller
     {
         string baseuri = "https://localhost:44338/api/books";
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             string bookUri = $"{baseuri}/basic";
-            return View(GetApiResult<List<BookBasic>>(bookUri)); 
+            return View(await GetApiResult<List<BookBasic>>(bookUri)); 
         }
 
         public static async Task<T> GetApiResult<T>(string uri)
@@ -30,6 +30,19 @@ namespace BookService.MVC.Controllers
                                       .DeserializeObject<T>(response)
                             );
             }
+        }
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            string geekJokesUri = "https://geek-jokes.sameerkumar.website/api";
+            string ipsumUri = "https://baconipsum.com/api/?type=meat-and-filler&paras=2&format=text";
+            string bookUri = $"{baseuri}/detail/{id}";
+            return View(new BookDetailExtraViewModel
+            {
+                BookDetail = await GetApiResult<BookDetail>(bookUri),
+                AuthorJoke = "", //GetApiResult<string>(geekJokesUri),
+                BookSummary = "" //new HttpClient().GetStringAsync(ipsumUri).Result //pure string response, no json 
+            }) ;
         }
     }
 }
