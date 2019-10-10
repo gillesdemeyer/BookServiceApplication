@@ -15,6 +15,7 @@ namespace BookService.WebAPI.Services
 
         public AutoMapperProfileConfiguration(string profileName) : base(profileName)
         {
+            CreateMap<PublisherBasic, Publisher>().ReverseMap();
             CreateMap<BookBasic, Book>().ReverseMap();
             CreateMap<Book, BookDetail>()
                 .ForMember(

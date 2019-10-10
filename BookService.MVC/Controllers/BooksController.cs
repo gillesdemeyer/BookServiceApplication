@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using BookService.Lib.DTO;
+﻿using BookService.Lib.DTO;
 using BookService.MVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using BookService.MVC.Helpers;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BookService.MVC.Controllers
 {
@@ -16,21 +13,9 @@ namespace BookService.MVC.Controllers
         public async Task<IActionResult> Index()
         {
             string bookUri = $"{baseuri}/basic";
-            return View(await GetApiResult<List<BookBasic>>(bookUri)); 
+            return View(WebApiHelper.GetApiResult<List<BookBasic>>(bookUri)); 
         }
 
-        public static async Task<T> GetApiResult<T>(string uri)
-        {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                string response = await httpClient.GetStringAsync(uri);
-                return await Task.Factory.StartNew
-                            (
-                                () => JsonConvert
-                                      .DeserializeObject<T>(response)
-                            );
-            }
-        }
 
         public async Task<IActionResult> Detail(int id)
         {
@@ -39,7 +24,7 @@ namespace BookService.MVC.Controllers
             string bookUri = $"{baseuri}/detail/{id}";
             return View(new BookDetailExtraViewModel
             {
-                BookDetail = await GetApiResult<BookDetail>(bookUri),
+                BookDetail = WebApiHelper.GetApiResult<BookDetail>(bookUri),
                 AuthorJoke = "", //GetApiResult<string>(geekJokesUri),
                 BookSummary = "" //new HttpClient().GetStringAsync(ipsumUri).Result //pure string response, no json 
             }) ;
