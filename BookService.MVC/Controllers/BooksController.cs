@@ -12,23 +12,22 @@ namespace BookService.MVC.Controllers
     public class BooksController : Controller
     {
         string baseuri = "https://localhost:5001/api/books";
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             string bookUri = $"{baseuri}/basic";
-            return Ok(GetApiResult<List<BookBasic>>(bookUri)); //View();
+            return Ok(await GetApiResult<List<BookBasic>>(bookUri)); //View();
         }
 
-        public static T GetApiResult<T>(string uri)
+        public static async Task<T> GetApiResult<T>(string uri)
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                Task<String> response = httpClient.GetStringAsync(uri);
-                return Task.Factory.StartNew
+                string response = await httpClient.GetStringAsync(uri);
+                return await Task.Factory.StartNew
                             (
                                 () => JsonConvert
-                                      .DeserializeObject<T>(response.Result)
-                            )
-                            .Result;
+                                      .DeserializeObject<T>(response)
+                            );
             }
         }
     }
