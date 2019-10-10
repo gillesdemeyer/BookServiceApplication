@@ -12,7 +12,7 @@ namespace BookService.MVC.Controllers
 {
     public class BooksController : Controller
     {
-        string baseuri = "https://localhost:5001/api/books";
+        string baseuri = "https://localhost:44338/api/books";
         public IActionResult Index()
         {
             string bookUri = $"{baseuri}/basic";
@@ -27,9 +27,10 @@ namespace BookService.MVC.Controllers
             return View(new BookDetailExtraViewModel
             {
                 BookDetail = GetApiResult<BookDetail>(bookUri),
-                AuthorJoke = GetApiResult<string>(geekJokesUri),
-                BookSummary = new HttpClient().GetStringAsync(ipsumUri).Result //pure string response, no json 
-            });
+                //TODO: fix exception on going back to list and executing this method again
+                //AuthorJoke = //GetApiResult<string>(geekJokesUri),
+                //BookSummary = new HttpClient().GetStringAsync(ipsumUri).Result //pure string response, no json 
+            }) ; 
         }
 
         public static T GetApiResult<T>(string uri)
