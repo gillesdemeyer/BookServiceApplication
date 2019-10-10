@@ -1,0 +1,26 @@
+﻿@using BookService.Lib.DTO
+@model  List<BookBasic>
+
+
+<h1>Boeken</h1>
+<div class="row">
+    <div class="col-md-4">
+        <ul class="list-group">
+            @foreach(BookBasic bookBasic in Model)
+            {
+                <li class="list-group-item  
+                    @(
+                        bookBasic.Title.Contains("C#") || 
+                        bookBasic.Title.Contains(".Net")
+                        ? "list-group-item-success"
+                        : "")">
+                    <a asp-controller="Books" 
+                       asp-action="Detail" 
+                       asp-route-id="@bookBasic.Id">
+                        @bookBasic.Title
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
