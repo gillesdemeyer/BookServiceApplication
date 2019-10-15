@@ -15,6 +15,11 @@ namespace BookService.MVC.Controllers
             return View();
         }
 
+        public IActionResult IndexVue()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
