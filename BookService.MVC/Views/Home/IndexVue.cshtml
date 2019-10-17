@@ -14,10 +14,29 @@
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
+        var apiURL = 'https://localhost:44338/api/books/basic';
+
         var app = new Vue({
             el: '#app',
             data: {
                 message: 'Loading books...',
+                books: null,
+            },
+            created: function () {
+                var self = this;
+                self.fetchBooks();
+            },
+            methods: {
+                fetchBooks: function () {
+                    self = this;
+                    fetch(apiURL)
+                        .then(res => res.json())
+                        .then(function (books) {
+                            self.books = books;
+                            self.message = 'Overview';
+                        })
+                        .catch(err => console.error(`Fout: ${err}`));
+                }
             }
         });
     </script>
