@@ -47,6 +47,13 @@ namespace BookService.WebAPI.Controllers
             return Ok(await repository.ListBasic());
         }
 
+        [HttpPost] public async override Task<IActionResult> Post([FromBody] Book book) 
+        { 
+            book.Author = null; 
+            book.Publisher = null; 
+            return await base.Post(book); 
+        }
+
 
         [HttpGet]
         [Route("ImageByName/{filename}")]

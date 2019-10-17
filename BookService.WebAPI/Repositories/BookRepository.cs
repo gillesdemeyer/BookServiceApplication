@@ -16,6 +16,9 @@ namespace BookService.WebAPI.Repositories
         {
         }
 
+
+      
+
         public async Task<List<Book>> GetAllInclusive()
         {
             return await db.Books
@@ -46,6 +49,14 @@ namespace BookService.WebAPI.Repositories
                 .Include(b => b.Author)
                 .Include(b => b.Publisher)
                 .FirstOrDefaultAsync(b => b.Id == id));
+        }
+
+        public override async Task<Book> GetById(int id)
+        {
+            return await db.Books
+                .Include(b => b.Author)
+                .Include(b => b.Publisher)
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
 
     }

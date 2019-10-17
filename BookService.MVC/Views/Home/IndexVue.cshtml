@@ -1,43 +1,84 @@
-﻿
+﻿@{
+    ViewBag.Title = "Books with Vue.js";
+}
 
-
-<h1>IndexVue</h1>
+<h2>@ViewBag.Title</h2>
 
 <article id="app" class="row">
     <header class="col-md-4">
-        <h3>{{ message }}</h3>
+        <h3>{{ message }}</h3>   @*Vue mustache*@
+        <nav>
+            <ul class="list-group">
+                <li v-for="book in books" v-on:click="fetchBookDetails(book)" :class="getBookClass(book)" style="cursor:pointer">
+                    <span class="bookTitle">{{ book.title }}</span>
+                </li>
+            </ul>
+        </nav>
     </header>
+    <div v-if="currentBook" class="col-md-4">
+        <h3>Details</h3>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label small">Title</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="currentBook.title" :readonly="isReadOnly">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label small">Author</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="currentBook.author.lastName +' '  +currentBook.author.firstName" v-if="isReadOnly" :readonly="isReadOnly">
+                    <select v-model="currentBook.author" class="form-control" v-if="!isReadOnly">
+                        <option v-for="author in authors" :value="author">{{ author.lastName }} {{ author.firstName }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label small">Publisher</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" :value="currentBook.publisher.name" v-if="isReadOnly" :readonly="isReadOnly">
+                    <select v-model="currentBook.publisher" class="form-control" v-if="!isReadOnly">
+                        <option v-for="publisher in publishers" :value="publisher">{{ publisher.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label small">Year</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="currentBook.year" :readonly="isReadOnly">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label small">ISBN</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="currentBook.isbn" :readonly="isReadOnly">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label small">Pages</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="currentBook.numberOfPages" :readonly="isReadOnly">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label small">Price</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="currentBook.price" :readonly="isReadOnly">
+                </div>
+            </div>
+            <button v-on:click="toEditMode(true)" v-if="isReadOnly" class="btn btn-primary">Edit</button>
+            <button v-on:click="toEditMode(false)" v-if="isReadOnly" class="btn btn-warning">New</button>
+            <button v-on:click="deleteBook()" v-if="isReadOnly" class="btn btn-danger">Delete</button>
+            <button v-on:click="save" v-if="!isReadOnly" class="btn btn-primary">Save</button>
+            <button v-on:click="cancel" v-if="!isReadOnly" class="btn btn-default">Cancel</button>
+        </div>
+
+    </div>
 </article>
 
 
-
-@section Scripts{
+@section scripts{
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script>
-        var apiURL = 'https://localhost:44338/api/books/basic';
-
-        var app = new Vue({
-            el: '#app',
-            data: {
-                message: 'Loading books...',
-                books: null,
-            },
-            created: function () {
-                var self = this;
-                self.fetchBooks();
-            },
-            methods: {
-                fetchBooks: function () {
-                    self = this;
-                    fetch(apiURL)
-                        .then(res => res.json())
-                        .then(function (books) {
-                            self.books = books;
-                            self.message = 'Overview';
-                        })
-                        .catch(err => console.error(`Fout: ${err}`));
-                }
-            }
-        });
-    </script>
+    <script src="~/js/Books.js"></script>
 }
+
